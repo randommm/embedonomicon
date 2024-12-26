@@ -16,11 +16,11 @@ pub unsafe extern "C" fn Reset() -> ! {
         static _sidata: u8;
     }
 
-    let count = &_ebss as *const u8 as usize - &_sbss as *const u8 as usize;
-    ptr::write_bytes(&mut _sbss as *mut u8, 0, count);
+    let count = &raw const _ebss as usize - &raw const _sbss as usize;
+    ptr::write_bytes(&raw mut _sbss, 0, count);
 
-    let count = &_edata as *const u8 as usize - &_sdata as *const u8 as usize;
-    ptr::copy_nonoverlapping(&_sidata as *const u8, &mut _sdata as *mut u8, count);
+    let count = &raw const _edata as usize - &raw const _sdata as usize;
+    ptr::copy_nonoverlapping(&_sidata as *const u8, &raw mut _sdata, count);
 
     // Call user entry point
     extern "Rust" {
